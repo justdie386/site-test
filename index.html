@@ -1,18 +1,67 @@
- <style>
-   body, html {
-  height: 100%;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Game</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-.bg {
-  /* The image used */
-  background-image: url("image.png");
+        #game {
+            width: 100%;
+            height: 100%;
+            background-image: url("provinces.png");
+            cursor: pointer;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
 
-  /* Full height */
-  height: 100%;
+        #eggs,
+        #points {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="game"></div>
 
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-</style>
+    <script>
+        const gameElement = document.getElementById("game");
+
+
+        let isZoomedIn = false;
+
+        gameElement.addEventListener("click", onGameClicked);
+
+        function onGameClicked(event) {
+            if (isZoomedIn) {
+                gameElement.style.backgroundSize = "cover";
+                gameElement.style.backgroundPosition = "center";
+                gameElement.style.backgroundSize = "100% 100%";
+                isZoomedIn = false;
+            } else {
+                const clickedX = event.clientX;
+                const clickedY = event.clientY;
+                const zoomedX = (clickedX / window.innerWidth) * 100;
+                const zoomedY = (clickedY / window.innerHeight) * 100;
+                gameElement.style.backgroundSize = "300% 300%";
+                gameElement.style.backgroundPosition = `${zoomedX}% ${zoomedY}%`;
+                isZoomedIn = true;
+            }
+        }
+    </script>
+</body>
+</html>
